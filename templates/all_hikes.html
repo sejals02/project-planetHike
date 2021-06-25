@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}All Hikes{% endblock %}
+
+{% block body %}
+  <h1>All Hikes</h1>
+
+  <ul>
+    {% for hike in hikes %}
+      <li>
+        <a href="/hikes/{{ hike.hike_id }}">
+          {{ hike.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

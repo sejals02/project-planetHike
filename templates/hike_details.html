@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ hikedetails.name }} - Details{% endblock %}
+
+{% block body %}
+
+  <h1>{{ hikedetails.name }}</h1>
+
+  <p>National park name: {{ hikedetails.area_name }}</p>
+  <p>City: {{ hikedetails.city_name }}</p>
+  <p>State: {{ hikedetails.state_name }}</p>
+  <p>Country: {{ hikedetails.country_name }}</p>
+  <p>Location: {{ hikedetails.geoloc }}</p>
+  <p>Difficulty Level: {{ hikedetails.difficulty_level }} </p>
+  <p>Trail Distance in Miles: {{ hikedetails.miles }}</p>
+  <p>Trail Features: 
+    {% for feature in hikedetails.features %}
+       <li>
+        {{ feature }}
+       </li>
+    {% endfor %}
+  </p>
+  <p>Average Ratings: {{ hikedetails.avg_rating }}</p>
+  
+
+
+{% endblock %}
+
+
+
