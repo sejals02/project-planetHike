@@ -36,11 +36,8 @@ with open('data/original_nationalpark_data.csv', newline='') as csvfile:
         country_name = row["country_name"]
         geoloc = row["_geoloc"]
         difficulty_level = row["difficulty_rating"]
-        #Convert meters to miles 
+        #Convert meters to miles before seeding data to the db
         miles = float(row["length"])/1609.344
-        # print(miles)
-        # print(type(miles))
-        # print('**************')
         features = str(row["features"])
         avg_rating = row["avg_rating"]
         
@@ -56,5 +53,5 @@ for n in range(10):
     #password = fake.password(length = 5)
     password = "12345"
 
-    crud.create_user(fname, lname, email, password)
+    crud.create_user(email, password, fname, lname)
 

@@ -56,10 +56,23 @@ def get_hikedetails_by_id(hike_id):
 
     return Hike.query.get(hike_id)
 
+def create_user(email, password, fname, lname):
+    """Create and return a new user."""
+
+    user = User(email=email, password=password, fname=fname, lname=lname)
+
+    db.session.add(user)
+    db.session.commit()
+
+    return user
+    
 def get_user_by_email(email):
     """Return authenticated user details based on the email passed"""
 
-    return User.query.filter(email == email).first()
+    user = User.query.filter(User.email == email).first()
+    # print (f"from crud {u}")
+    return user
+
 
 if __name__ == "__main__":
     from server import app

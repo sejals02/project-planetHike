@@ -31,7 +31,7 @@ def show_hikedetails(hike_id):
     """Show details on a particular hiking trail."""
 
     hikedetails = crud.get_hikedetails_by_id(hike_id)
-    features = hikedetails.features.split(",")
+    features = (hikedetails.features)
     print(features)
     print(type(features))
 
@@ -42,18 +42,48 @@ def process_login():
     """Process user login."""
 
     email = request.form.get("email")
+    # print("**********************")
+    # print()
+    # print (email)
+    # print()
+    # print("**********************")
     password = request.form.get("password")
+    # print("**********************")
+    # print()
+    # print(password)
+    # print()
+    # print("**********************")
 
     user = crud.get_user_by_email(email)
+    print (user)
     
     if not user or user.password != password:
-        flash ("The email or password you entered was incorrect.")
+        flash ("The email or password you entered was incorrect. Please try again")
     else:
     #     # Log in user by storing the user's email in session
         session["user_email"] = user.email
-        flash(f"Welcome back, {user.fname} !")
+        flash(f"Welcome back {user.fname}")
 
     return redirect("/")    
+
+@app.route("/users", methods=["POST"])
+def create_user():
+    """Create a new user."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+    fname = request.form.get("fname")
+    lname = request.form.get("lname")
+
+    user = crud.get_user_by_email(email)
+
+    if user:
+        flash("User account already exists with that email.")
+    else:    
+        crud.create_user(email, password, fname, lname)
+        flash("Account created successfully! Please log in.")
+        
+    return redirect("/")
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
