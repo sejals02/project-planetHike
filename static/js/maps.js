@@ -45,15 +45,5 @@ function initMap(){
   });
 
   trailInfo.open(basicMap, trailMarker);
-
-  // Now fetch lat/lan from hikedetails
-  // ---------This whole block of code retuns parsedDocument ==> #document on console so clearly it's not working----
-  // const parser = new DOMParser();
-
-  // const parsedDocument = parser.parseFromString (`document.querySelector('#loc')`, "text/html");
-
-  // console.log (parsedDocument);
-  // ------------
-  
   
  }  
