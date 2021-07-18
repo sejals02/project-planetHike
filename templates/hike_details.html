@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block head %}
+  <script src="/static/js/maps.js"></script>
+  <script
+    async defer 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcOp-SCFmsmDFlZfjKPU45YUYon80LrhQ&callback=initMap">
+  </script>
+
+{% endblock %}
+
 {% block title %}{{ hikedetails.name }} - Details{% endblock %}
 
 {% block body %}

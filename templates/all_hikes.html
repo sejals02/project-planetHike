@@ -2,7 +2,19 @@
 {% block title %}All Hikes{% endblock %}
 
 {% block body %}
-  <h1>All Hikes</h1>
+ 
+  
+  {% if state  %}
+    <h1>All Hikes from {{ state }} </h1>
+  {% elif nationalpark %}
+    <h1>All Hikes from {{ npname.area_name }} </h1>
+  {% elif dl %}
+    <h1>All Hikes from Difficulty Level {{ dl }} </h1>  
+  {% elif feature %}
+    <h1>All Hikes listing for {{ feature }} friendly trails </h1>  
+  {% else %}
+    <h1>All Hikes from across the US National parks<h1>  
+  {% endif %}   
 
   <ul>
     {% for hike in hikes %}
@@ -13,4 +25,5 @@
       </li>
     {% endfor %}
   </ul>
+
 {% endblock %}
