@@ -24,7 +24,7 @@ def all_hikes():
 
     hikes = crud.get_hikes()
 
-    return render_template("all_hikes.html", hikes=hikes)
+    return render_template("all_hikes.html", hikes=hikes,  state=None, nationalpark=None, dl_hikes=None, dl=None, feature=None)
 
 @app.route("/hikes/<hike_id>")
 def show_hikedetails(hike_id):
@@ -37,22 +37,74 @@ def show_hikedetails(hike_id):
 
     return render_template("hike_details.html", hikedetails=hikedetails)
 
+@app.route("/searchbystate", methods=["POST"])
+def show_hikedetails_byState():
+    """Show details on a particular hiking trail."""
+
+    state = request.form.get("state")
+    hikes = crud.get_hikedetails_by_state(state)
+
+    if hikes:
+        return render_template("all_hikes.html", hikes=hikes, state=state, nationalpark=None, dl_hikes=None)       
+        
+    else:    
+        flash("Please enter full name of the US state, eg. California. No State abbreviations are allowed")
+        return redirect("/")
+
+@app.route("/searchbydifficultylevel", methods=["POST"])
+def show_hikedetails_bydiffcultylevel():
+    """Show hikes based on the difficulty level."""
+
+    dl = request.form.get("difficulty_level")
+
+    hikes = crud.get_hikedetails_by_difficultylevel(dl)
+
+    if hikes:
+        return render_template("all_hikes.html", dl = dl, hikes=hikes, state=None, nationalpark=None)       
+        
+    else:    
+        flash("Please select any of the search criteria prvided on the website for searching the hiking trails")
+    return redirect("/") 
+
+@app.route("/searchbyfeature", methods=["POST"])
+def show_hikedetails_byfeature():
+    """Show list of hikes based on the feature."""
+
+    feature = request.form.get("feature")
+
+    hikes = crud.get_hikedetails_by_feature(feature)
+
+    if hikes:
+        return render_template("all_hikes.html", feature=feature, hikes=hikes, dl=None, state=None, nationalpark=None)       
+        
+    else:    
+        flash("Please select any of the search criteria provided on the website for searching the hiking trails")
+    return redirect("/")            
+
+@app.route("/searchbynp", methods=["POST"])
+def show_hikedetails_byNationalpark():
+    """Show list of all the hiking trails for a national park."""
+
+    nationalpark = request.form.get("np")
+
+    hikes = crud.get_hikedetails_by_np(nationalpark)
+
+    npname = crud.get_nationalpark_name(nationalpark)
+
+    if hikes:
+        return render_template("all_hikes.html", hikes=hikes, nationalpark=nationalpark, npname = npname, state=None)       
+        
+    else:    
+        flash("Please enter full name of a national park, eg. Yellowstone National Park.")
+        return redirect("/")   
+
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
 
     email = request.form.get("email")
-    # print("**********************")
-    # print()
-    # print (email)
-    # print()
-    # print("**********************")
+
     password = request.form.get("password")
-    # print("**********************")
-    # print()
-    # print(password)
-    # print()
-    # print("**********************")
 
     user = crud.get_user_by_email(email)
     print (user)

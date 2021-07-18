@@ -2,6 +2,7 @@
 
 from model import db, User, Hike, Trail, connect_to_db
 import server
+from sqlalchemy import distinct
 
 
 def create_user(fname, lname, email, password):
@@ -55,6 +56,53 @@ def get_hikedetails_by_id(hike_id):
     """Return trail details for a selected trail"""
 
     return Hike.query.get(hike_id)
+
+def get_hikedetails_by_state(state):
+    """Return hiking places for a searched state"""
+
+    state_hikes = Hike.query.filter(Hike.state_name == state).all()
+    return state_hikes
+
+def get_hikedetails_by_np(nationalpark):
+    """Return hiking places for a searched national park"""
+
+    np_hikes = Hike.query.filter(Hike.area_name.like(nationalpark + '%')).all()
+    return np_hikes
+
+def get_nationalpark_name(nationalpark):
+    """Return full national park name if user searched with a partial national park name"""
+
+    np_name = Hike.query.filter(Hike.area_name.like(nationalpark + '%')).first()
+    return np_name
+
+def get_hikedetails_by_difficultylevel(dl):
+    """Return list of hike trails per the difficuly level"""
+
+    if (dl == "Easy"):
+       nationalpark = Hike.query.filter((Hike.difficulty_level == '1') | (Hike.difficulty_level == '2')).all()
+
+    elif (dl == "Moderate"):
+        nationalpark = Hike.query.filter((Hike.difficulty_level == '3') | (Hike.difficulty_level == '4')).all()
+
+    elif (dl == "Hard"):
+        nationalpark = Hike.query.filter(Hike.difficulty_level > '4').all()
+    
+    return nationalpark
+
+def get_hikedetails_by_feature(feature):
+    """ Return the list of hikes per feature """
+
+    if (feature == "dog"):
+       npbyfeature = Hike.query.filter(Hike.features.like('%dogs-leash%')).all()
+
+    if (feature == "kid"):
+       npbyfeature = Hike.query.filter(Hike.features.like('%kids%') | Hike.features.like('%strollers%')).all()
+  
+    if (feature == "water"):
+       npbyfeature = Hike.query.filter(Hike.features.like('%river%') | Hike.features.like('%beach%')).all()
+
+    
+    return npbyfeature
 
 def create_user(email, password, fname, lname):
     """Create and return a new user."""
