@@ -135,7 +135,8 @@ def create_user():
         crud.create_user(email, password, fname, lname)
         flash("Account created successfully! Please log in.")
         
-    return redirect("/")
+    return redirect("/")     
+
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
