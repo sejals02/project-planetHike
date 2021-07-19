@@ -104,6 +104,13 @@ def get_hikedetails_by_feature(feature):
     
     return npbyfeature
 
+def get_hikedetails_by_userloc(k):
+    """ Retrun the list of the trails within 50 miles radius of the entered zipcode"""
+
+    npbyuserloc = Hike.query.filter(Hike.area_name == k).all()
+
+    return npbyuserloc
+
 def create_user(email, password, fname, lname):
     """Create and return a new user."""
 

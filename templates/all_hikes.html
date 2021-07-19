@@ -12,6 +12,8 @@
     <h1>All Hikes from Difficulty Level {{ dl }} </h1>  
   {% elif feature %}
     <h1>All Hikes listing for {{ feature }} friendly trails </h1>  
+  {% elif zcode %}
+    <h1>All Hikes with in the 50 miles radius of {{ zcode }}  </h1>     
   {% else %}
     <h1>All Hikes from across the US National parks</h1>  
   {% endif %}   

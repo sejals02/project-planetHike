@@ -4,8 +4,10 @@ from flask import *
 # from flask import (Flask, render_template, request, flash, session, redirect)
 from model import connect_to_db
 import crud
-
 from jinja2 import StrictUndefined
+import requests
+import googlemaps
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -96,7 +98,59 @@ def show_hikedetails_byNationalpark():
         
     else:    
         flash("Please enter full name of a national park, eg. Yellowstone National Park.")
-        return redirect("/")   
+        return redirect("/")        
+
+@app.route("/searchbyuserloc", methods=["POST"])
+def show_resultsby_userloc():
+    """Show result for national park within 50 miles radious of user location."""
+    
+    zcode = request.form.get("userloc")
+
+    API_KEY = 'AIzaSyDcOp-SCFmsmDFlZfjKPU45YUYon80LrhQ'
+
+    params = {
+        'key' : API_KEY,
+        'address': zcode
+    }
+    #Based on the user entered zipcode, processing and getting lat/lon 
+    base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    response = requests.get(base_url, params=params).json()
+    response.keys()
+
+    if response['status'] == 'OK':
+        geometry = response['results'][0]['geometry']
+        lat = geometry['location']['lat']
+        lon = geometry['location']['lng']
+
+    #using google places api to get the park list from within 50 mile radious of user input zipcode
+    map_client = googlemaps.Client(API_KEY)
+
+    location = (lat, lon)
+    search_string = "park"
+    distance = 50 * 1609.344
+    park_list = []
+
+    i = 0
+
+    response = map_client.places_nearby(
+        location = location,
+        keyword = search_string,
+        radius = distance #in meters
+    )
+    
+    i = 0
+    for p in response:
+        park_list.append(response['results'][i]['name'])
+        i += 1
+    
+    for k in park_list:
+        hikes = crud.get_hikedetails_by_userloc(k)
+
+    if len(hikes) > 0:
+        return render_template("all_hikes.html",zcode=zcode,hikes = hikes, nationalpark=None,state=None, dl=None, feature=None)      
+    else:
+        flash(f"No results found for the zipcode {zcode}. Please try again")
+        return redirect("/") 
 
 @app.route("/login", methods=["POST"])
 def process_login():

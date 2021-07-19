@@ -21,7 +21,7 @@
   <p>Country: {{ hikedetails.country_name }}</p>
   <p class = "loc">Location: {{ hikedetails.geoloc }}</p>
   <p>Difficulty Level: {{ hikedetails.difficulty_level }} </p>
-  <!-- display upto 2 decimal points value for the trail distance -->
+  <!-- format to display upto 2 decimal points value for the trail distance -->
   <p>Trail Distance in Miles: {{ "{:.2f}".format(hikedetails.miles) }}</p>
   <p>Trail Features:
     {% for feature in hikedetails.features[1:-1].split(',') %}

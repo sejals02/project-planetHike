@@ -2,10 +2,6 @@
 {% block title %}Hike Planet Home{% endblock %}
 
 {% block body %}
-
- <head>  
-   <script type="text/javascript" src="static/js/features.js"></script>  
-  </head>  
    
  <h1>Welcome to Planet Hike website!</h1>
 
@@ -66,6 +62,15 @@
         <input type="submit">
       </p>
     </form>
+
+    <h2>Search hiking places within 50 mile radius of your zipcode</h2>
+    <form action="/searchbyuserloc" method="POST">  
+      <p>
+        Please enter your zipcode: <input type="text" name="userloc">
+      <p>
+        <input type="submit">
+      </p>
+      </form>  
     
   <h2>Create an Account</h2>
   <form action="/users" method="POST">
