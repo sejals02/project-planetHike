@@ -31,8 +31,19 @@
     {% endfor %}
   </p>
   <p>Average Ratings: {{ hikedetails.avg_rating }}</p>
+
+  {% if curr_temp %}
+  
+    <h1>Current temprature {{ curr_temp }} Fahrenheit </h1>
+
+    <h1>Min temprature {{ min_temp }} Fahrenheit </h1>
+
+    <h1>Max temprature {{ max_temp }} Fahrenheit </h1>
+
+  {% endif %} 
   
   <div id = "map"></div>
+
 {% endblock %}
 
 

@@ -8,6 +8,7 @@ from jinja2 import StrictUndefined
 import requests
 import googlemaps
 import pandas as pd
+import pyowm
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -33,11 +34,28 @@ def show_hikedetails(hike_id):
     """Show details on a particular hiking trail."""
 
     hikedetails = crud.get_hikedetails_by_id(hike_id)
-    features = (hikedetails.features)
-    print(features)
-    print(type(features))
+    cityname = (hikedetails.city_name)
 
-    return render_template("hike_details.html", hikedetails=hikedetails)
+    """Provide weather for a national park"""
+    #pyowm API key
+    pyown_APIKEY = '305bdfa862b07afb5ea55af3f568513d'
+    # Use API key to get data
+    OpenWMap=pyowm.OWM(pyown_APIKEY)
+    # give where you need to see the weather  
+    try:
+        Weather=OpenWMap.weather_at_place(cityname)  
+        # get out data in the mentioned location
+        Data=Weather.get_weather() 
+        # get current temparature in Farenheit 
+        temp = Data.get_temperature(unit='fahrenheit')  
+        curr_temp = temp['temp']  
+        min_temp = temp['temp_min']
+        max_temp = temp['temp_max']
+
+        if curr_temp:
+            return render_template("hike_details.html", hikedetails=hikedetails, curr_temp=curr_temp, min_temp=min_temp, max_temp=max_temp)
+    except:
+         return render_template("hike_details.html", hikedetails=hikedetails,curr_temp=None, min_temp=None, max_temp=None)   
 
 @app.route("/searchbystate", methods=["POST"])
 def show_hikedetails_byState():
@@ -106,6 +124,7 @@ def show_resultsby_userloc():
     
     zcode = request.form.get("userloc")
 
+    #google api key
     API_KEY = 'AIzaSyDcOp-SCFmsmDFlZfjKPU45YUYon80LrhQ'
 
     params = {
@@ -126,31 +145,30 @@ def show_resultsby_userloc():
     map_client = googlemaps.Client(API_KEY)
 
     location = (lat, lon)
-    search_string = "park"
+    search_string = "National Park"
     distance = 50 * 1609.344
     park_list = []
-
-    i = 0
+    hikes = []
 
     response = map_client.places_nearby(
         location = location,
         keyword = search_string,
         radius = distance #in meters
     )
-    
+
     i = 0
     for p in response:
         park_list.append(response['results'][i]['name'])
         i += 1
-    
-    for k in park_list:
-        hikes = crud.get_hikedetails_by_userloc(k)
 
+    for k in park_list:
+        hikes.extend(crud.get_hikedetails_by_userloc(k))
+        
     if len(hikes) > 0:
-        return render_template("all_hikes.html",zcode=zcode,hikes = hikes, nationalpark=None,state=None, dl=None, feature=None)      
+            return render_template("all_hikes.html",zcode=zcode,hikes = hikes, nationalpark=None,state=None, dl=None, feature=None)      
     else:
-        flash(f"No results found for the zipcode {zcode}. Please try again")
-        return redirect("/") 
+            flash(f"No results found for the zipcode {zcode}. Please try again")
+            return redirect("/") 
 
 @app.route("/login", methods=["POST"])
 def process_login():
