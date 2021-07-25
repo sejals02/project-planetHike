@@ -9,6 +9,7 @@ import requests
 import googlemaps
 import pandas as pd
 import pyowm
+import os
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -27,7 +28,7 @@ def all_hikes():
 
     hikes = crud.get_hikes()
 
-    return render_template("all_hikes.html", hikes=hikes,  state=None, nationalpark=None, dl_hikes=None, dl=None, feature=None)
+    return render_template("all_hikes.html", hikes=hikes,  state=None, nationalpark=None, dl_hikes=None, dl=None, feature=None, zcode=None)
 
 @app.route("/hikes/<hike_id>")
 def show_hikedetails(hike_id):
@@ -38,7 +39,8 @@ def show_hikedetails(hike_id):
 
     """Provide weather for a national park"""
     #pyowm API key
-    pyown_APIKEY = '305bdfa862b07afb5ea55af3f568513d'
+    #pyown_APIKEY = '305bdfa862b07afb5ea55af3f568513d'
+    pyown_APIKEY=os.environ['pyown_KEY']
     # Use API key to get data
     OpenWMap=pyowm.OWM(pyown_APIKEY)
     # give where you need to see the weather  
@@ -125,7 +127,8 @@ def show_resultsby_userloc():
     zcode = request.form.get("userloc")
 
     #google api key
-    API_KEY = 'AIzaSyDcOp-SCFmsmDFlZfjKPU45YUYon80LrhQ'
+    #API_KEY = 'AIzaSyDcOp-SCFmsmDFlZfjKPU45YUYon80LrhQ'
+    API_KEY = os.environ['Google_KEY']
 
     params = {
         'key' : API_KEY,
@@ -170,6 +173,12 @@ def show_resultsby_userloc():
             flash(f"No results found for the zipcode {zcode}. Please try again")
             return redirect("/") 
 
+@app.route("/redirectologin")
+def redirect_to_login():
+    """Redirect users to the login page"""
+
+    return render_template("signin.html")
+
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
@@ -183,12 +192,13 @@ def process_login():
     
     if not user or user.password != password:
         flash ("The email or password you entered was incorrect. Please try again")
+        return render_template("signin.html")
     else:
     #     # Log in user by storing the user's email in session
         session["user_email"] = user.email
         flash(f"Welcome back {user.fname}")
 
-    return redirect("/")    
+        return redirect("/")    
 
 @app.route("/users", methods=["POST"])
 def create_user():
@@ -202,13 +212,71 @@ def create_user():
     user = crud.get_user_by_email(email)
 
     if user:
-        flash("User account already exists with that email.")
+        flash("User account already exists with that email. Please log in.")
+
     else:    
         crud.create_user(email, password, fname, lname)
         flash("Account created successfully! Please log in.")
-        
-    return redirect("/")     
 
+    return render_template("signin.html")   
+         
+
+@app.route("/fav_trail", methods=["POST"])
+def favorite_trail():
+    """Save user faved trails."""
+
+    hike_id = request.form.get("hikeID")
+        
+    if "user_email" in session: 
+
+        user_email = session["user_email"]
+
+        user = crud.get_user_by_email(user_email)
+        user_id = user.user_id
+        
+        trail = crud.save_favorited_trail(hike_id, user_id)
+
+        if trail:
+            flash("Trail information is successfully saved to your profile")
+        
+        return redirect(f"/hikes/{hike_id}")
+
+    else:
+        flash ("To favorite the trail, please log in and try again")  
+
+        return render_template("signin.html")
+
+@app.route("/welcome", methods=["GET","POST"])
+def welcome_signedin_user():
+    """Welcome signed in user with the personalized message"""
+
+    if "user_email" in session: 
+
+        user_email = session["user_email"]
+
+        print ()
+        print ()
+        print ("************")
+        print (user_email)
+        print ("************")
+        print ()
+        print ()
+
+        user = crud.get_user_by_email(user_email)
+        user_fname = user.fname
+
+
+        print ()
+        print ()
+        print ("************")
+        print (user.fname)
+        print ("************")
+        print ()
+        print ()
+
+        flash(f"Welcome {user_fname} to Planet Hike")
+
+        return redirect("/")
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

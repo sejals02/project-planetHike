@@ -128,6 +128,15 @@ def get_user_by_email(email):
     # print (f"from crud {u}")
     return user
 
+def save_favorited_trail(hike_id, user_id):
+    """ Write to Trails table with the user's favorited hike. """
+
+    trail = Trail(hike_id = hike_id, user_id = user_id)
+
+    db.session.add(trail)
+    db.session.commit()
+
+    return (trail)
 
 if __name__ == "__main__":
     from server import app

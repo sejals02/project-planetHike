@@ -3,12 +3,22 @@
 
 {% block body %}
    
- <h1>Welcome to Planet Hike website!</h1>
+  <!-- {% if 'user_email' not in session %}
+    <h1>Welcome to Planet Hike website!</h1>
+  {% elif 'user_email' in session %}
+    <a href="/welcome"></a>
+  {% endif %}   -->
+
+  <h1>Welcome to Planet Hike website!</h1> 
 
   <img src="static/image1.jpeg" style="width:40%";/>
 
-
-  <h2>Navigation</h2>
+  {% if 'user_email' not in session %}
+    <h2>Sign in</h2>
+    <a href="/redirectologin">Sign in or Sign up</a>
+  {% endif %}    
+  
+  <h2>View all the hikes from the United States</h2>
   <ul>
     <li><a href="/hike">View all hiking places</a></li>
   </ul>
@@ -72,7 +82,7 @@
       </p>
       </form>  
     
-  <h2>Create an Account</h2>
+  <!-- <h2>Create an Account</h2>
   <form action="/users" method="POST">
     <p>
       Email <input type="text" name="email" required>
@@ -105,6 +115,6 @@
     <p>
       <input type="submit">
     </p>
-  </form>
+  </form> -->
 {% endblock %}
 

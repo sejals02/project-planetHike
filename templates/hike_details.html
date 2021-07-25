@@ -34,17 +34,22 @@
 
   {% if curr_temp %}
   
-    <h1>Current temprature {{ curr_temp }} Fahrenheit </h1>
+    <h3>Current temprature {{ curr_temp }} Fahrenheit </h3>
 
-    <h1>Min temprature {{ min_temp }} Fahrenheit </h1>
+    <h3>Min temprature {{ min_temp }} Fahrenheit </h3>
 
-    <h1>Max temprature {{ max_temp }} Fahrenheit </h1>
+    <h3>Max temprature {{ max_temp }} Fahrenheit </h3>
 
   {% endif %} 
+
+  <h2>Favorite this trail</h2>
+  <form action="/fav_trail" method="POST">
+    <p>
+      <input name = "hikeID" value = {{ hikedetails.hike_id }} type="hidden">
+
+      <input type="submit">
+    </p>
   
   <div id = "map"></div>
 
 {% endblock %}
-
-
-

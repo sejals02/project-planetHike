@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Hike Planet Sign in page{% endblock %}
+
+{% block body %}
+   
+ <h1>Welcome to Planet Hike sign in page!</h1>
+
+ <h2>Log In</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+    
+  <h2>Create an Account</h2>
+  <form action="/users" method="POST">
+    <p>
+      Email <input type="text" name="email" required>
+    </p>
+
+    <p>
+      Password <input type="password" name="password" required>
+    </p>
+    <p>
+      First name <input type="text" name="fname">
+    </p>
+    <p>
+      Last name <input type="text" name="lname">
+    </p>
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+  
+{% endblock %}
+
