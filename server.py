@@ -12,6 +12,7 @@ import pyowm
 import os
 
 app = Flask(__name__)
+
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
@@ -196,7 +197,8 @@ def process_login():
     else:
     #     # Log in user by storing the user's email in session
         session["user_email"] = user.email
-        flash(f"Welcome back {user.fname}")
+        session["user_fname"] = user.fname
+        flash ("successfully logged in")        
 
         return redirect("/")    
 
@@ -246,37 +248,35 @@ def favorite_trail():
 
         return render_template("signin.html")
 
-@app.route("/welcome", methods=["GET","POST"])
-def welcome_signedin_user():
-    """Welcome signed in user with the personalized message"""
+@app.route("/profile")
+def view_profile():
+    """View trails for a signed in user"""
 
     if "user_email" in session: 
 
         user_email = session["user_email"]
 
-        print ()
-        print ()
-        print ("************")
-        print (user_email)
-        print ("************")
-        print ()
-        print ()
-
         user = crud.get_user_by_email(user_email)
-        user_fname = user.fname
+        # user_id = user.user_id
+
+        # user_favtrails = crud.get_trailid_by_userid(user_id)
+
+        # user_favtrails_name = []
+
+        # for t in user_favtrails:
+
+        #     trail_details = crud.get_hikedetails_by_id(t)
+        #     user_favtrails_name.append(trail_details.name)
+
+        return render_template("profile.html", hikes = user.hikes)
 
 
-        print ()
-        print ()
-        print ("************")
-        print (user.fname)
-        print ("************")
-        print ()
-        print ()
+@app.route('/logout')
+def logout():
+    """View trails for a signed in user"""
 
-        flash(f"Welcome {user_fname} to Planet Hike")
-
-        return redirect("/")
+    session.pop('user_email', None)
+    return redirect('/')
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

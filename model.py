@@ -3,6 +3,7 @@
 Part 1: Define Model Classes
 """
 
+from sqlalchemy.orm import backref
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -21,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
 
     trails = db.relationship('Trail')
-    #hikes = db.relationship('Hike')
+    hikes = db.relationship('Hike', secondary='trails', backref='users')
 
 
 class Hike(db.Model):

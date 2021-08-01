@@ -3,6 +3,8 @@
 from model import db, User, Hike, Trail, connect_to_db
 import server
 from sqlalchemy import distinct
+#from sqlalchemy import *
+from sqlalchemy.orm import joinedload, load_only
 
 
 def create_user(fname, lname, email, password):
@@ -125,7 +127,7 @@ def get_user_by_email(email):
     """Return authenticated user details based on the email passed"""
 
     user = User.query.filter(User.email == email).first()
-    # print (f"from crud {u}")
+    
     return user
 
 def save_favorited_trail(hike_id, user_id):
@@ -137,6 +139,18 @@ def save_favorited_trail(hike_id, user_id):
     db.session.commit()
 
     return (trail)
+
+def get_trailid_by_userid(user_id):
+    """ Get the list of trails which signed in user has favorited. """
+
+    trails = Trail.query.filter(Trail.user_id == user_id).all()
+
+    trailslist = []
+
+    for t in trails: 
+        if t.hike_id not in trailslist:
+            trailslist.append(t.hike_id)
+    return trailslist
 
 if __name__ == "__main__":
     from server import app

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+   
+ <h1>User profile</h1>
+  
+  <p>Your favorite trails:
+    {% for hike in hikes %}
+      <li>
+        <a href="/hikes/{{ hike.hike_id }}">{{ hike.name }}</a> 
+      
+      </li>  
+    {% endfor %}
+  </p>
+
+  <h3><a href = "/logout"> Logout </a> </h3>
+
+{% endblock %}
+
