@@ -26,20 +26,24 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/profile">Profile<span class="sr-only"></span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Homepage</a>
-          </li>
+        {% if 'user_email' in session %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/profile">Profile<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Homepage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Sign out</a>
+            </li> 
+          </ul>  
+        {% else %}
           <li class="nav-item">
             <a class="nav-link" href="/redirectologin">Sign in</a>
           </li> 
-          <li class="nav-item">
-            <a class="nav-link" href="/profile">Sign out</a>
-          </li> 
-        </ul>
+        {% endif %}
+
         <!-- <span class="navbar-text">
           Navbar text with an inline element
         </span> -->
