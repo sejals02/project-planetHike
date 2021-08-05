@@ -33,11 +33,16 @@ function initMap(){
   const trailMarker = new google.maps.Marker({
     position: trailCoords,
     title: 'Trail',
+    icon: {
+      url: '/static/images/girl_hiker.svg',
+      size: new google. maps. Size(50, 50),
+      scaledSize: new google. maps. Size(75, 50)
+    },
     map: basicMap
   });
   
   trailMarker.addListener('click', () => {
-    alert('Welcome!');
+    alert('Enjoy your hike!');
   });
 
   const trailInfo = new google.maps.InfoWindow({
