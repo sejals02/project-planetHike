@@ -87,3 +87,13 @@ p.copyright {
   margin-right: 5px;
   padding: 20px;
 }
+
+.box-3 {
+  flex:1;
+  flex-wrap: wrap;
+  border: 5px green solid;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  padding: 20px;
+}
