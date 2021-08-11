@@ -5,6 +5,10 @@
   width: 205px;
 }
 
+body {
+  margin-left: 10px;
+}
+
 /* .hike-bg {
   background-image: "static/image1.jpeg";
 } */
