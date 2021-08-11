@@ -4,17 +4,17 @@
 {% block body %}
   
   {% if state  %}
-    <h1>All Hikes from {{ state }} </h1>
+    <h3>All Hikes from {{ state }} </h3>
   {% elif nationalpark %}
-    <h1>All Hikes from {{ npname.area_name }} </h1>
+    <h3>All Hikes from {{ npname.area_name }} </h3>
   {% elif dl %}
-    <h1>All Hikes from Difficulty Level {{ dl }} </h1>  
+    <h3>All Hikes from Difficulty Level {{ dl }} </h3>  
   {% elif feature %}
-    <h1>All Hikes listing for {{ feature }} friendly trails </h1>  
+    <h3>All Hikes listing for {{ feature }} friendly trails </h3>  
   {% elif zcode %}
-    <h1>All Hikes with in the 50 miles radius of {{ zcode }}  </h1>     
+    <h3>All Hikes with in the 50 miles radius of {{ zcode }}  </h3>     
   {% else %}
-    <h1>All Hikes from across the US National parks</h1>  
+    <h3>All Hikes from across the US National parks</h3>  
   {% endif %}   
 
   <ul>

@@ -9,9 +9,11 @@ body {
   margin-left: 10px;
 }
 
-/* .hike-bg {
-  background-image: "static/image1.jpeg";
-} */
+.h1-homepage {
+  font-family: sans-serif;
+  color: green;
+  background-color: beige;
+} 
 
 h1 {
   font-family: sans-serif;
@@ -34,12 +36,11 @@ h5 {
 } 
 
 .h5-header {
-  /* background-color: white; */
   font-family: sans-serif;
   color: black;
   text-align: center;
   font-weight: bold;
-  font-size: large;
+  font-size: larger;
 } 
 .div-header {
   height: 500px;

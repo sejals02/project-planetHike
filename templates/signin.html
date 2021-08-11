@@ -3,9 +3,11 @@
 
 {% block body %}
    
- <h1>Welcome to Planet Hike sign in page!</h1>
+ <h3>Welcome to Planet Hike sign in page!</h3>
+ <p></p>
+ <p></p>
 
- <h2>Log In</h2>
+ <h4>Log In:</h4>
   <form action="/login" method="POST">
     <p>
       Email <input type="text" name="email">
@@ -20,7 +22,7 @@
     </p>
   </form>
     
-  <h2>Create an Account</h2>
+  <h4>Not a user? Create an Account:</h4>
   <form action="/users" method="POST">
     <p>
       Email <input type="text" name="email" required>

@@ -12,10 +12,10 @@
   <div class="div-header" style="background-image: url('static/images/yosemite.png'); background-size: 100% auto;"> 
   
     {% if 'user_email' in session %}
-      <h3>Welcome {{session['user_fname']}} to Planet Hike website!</h3> 
+    <div class="h1-homepage">Welcome {{session['user_fname']}} to Planet Hike website!</div> 
       <!-- <a href="/profile">Profile</a> -->
     {% else %}  
-      <h1>Welcome to Planet Hike website!</h1> 
+      <div class="h1-homepage">Welcome to Planet Hike website!</div> 
     {% endif %}  
         
     <div class = "h5-header">
@@ -93,7 +93,7 @@
     <h5>Search hiking places within 50 mile radius of your zipcode</h5>
     <form action="/searchbyuserloc" method="POST">  
       <p>
-        Please enter your zipcode: <input type="text" name="userloc">
+        Please enter your zipcode: <input type="text" name="userloc" required>
       <p>
         <input type="submit">
       </p>
