@@ -9,29 +9,26 @@
     <a href="/welcome">isdjfisjf</a>
   {% endif %}   -->
 
-
-  {% if 'user_email' in session %}
-    <h3>Welcome {{session['user_fname']}} to Planet Hike website!</h3> 
-    <!-- <a href="/profile">Profile</a> -->
-  {% else %}  
-    <h1>Welcome to Planet Hike website!</h1> 
-  {% endif %}  
-
-  <div class="container-fluid">
-    <img src="static/images/image1.jpeg" style="width:40%";/>
-  </div>
-
-  <!-- {% if 'user_email' not in session %}
-    <h3>Sign in</h3>
-    <a href="/redirectologin">Sign in or Sign up</a>
-  {% endif %}     -->
+  <div class="div-header" style="background-image: url('static/images/yosemite.png'); background-size: 100% auto;"> 
   
-  <h5>View all the hikes from the United States</h5>
-  <ul>
-    <li><a href="/hike">View all hiking places</a></li>
-  </ul>
-
-  <div class="container-1">
+    {% if 'user_email' in session %}
+      <h3>Welcome {{session['user_fname']}} to Planet Hike website!</h3> 
+      <!-- <a href="/profile">Profile</a> -->
+    {% else %}  
+      <h1>Welcome to Planet Hike website!</h1> 
+    {% endif %}  
+        
+    <div class = "h5-header">
+      <p>
+        View all the hikes from the United States
+      </p>
+      <p>
+        <a href="/hike">View all hiking places</a>
+      </p>
+      
+    </div>
+  </div>   
+  <div class="container-1"> 
     <div class="box-1"> 
       <h5>Search hiking places by the State</h5>
       <form action="/searchbystate" method="POST">
@@ -43,7 +40,7 @@
         </p>
       </form>
     </div>  
-    <div class="box-2"> 
+    <div class="box-1"> 
       <h5>Search hiking places by the National Park</h5>
       <form action="/searchbynp" method="POST">
             Enter National Park name here:<input type="text" value="Yellowstone National Park" name="np" required>
@@ -72,7 +69,7 @@
         </p>
       </form>
     </div> 
-    <div class="box-2">
+    <div class="box-1">
       <h5>Search hiking places by features</h5>
       <form action="/searchbyfeature" method="POST">  
         <p>
@@ -102,7 +99,7 @@
       </p>
       </form>  
   </p>
-    
+
   <!-- <h3>Create an Account</h3>
   <form action="/users" method="POST">
     <p>

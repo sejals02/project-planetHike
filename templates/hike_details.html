@@ -32,33 +32,33 @@
   </p>
   <p>Average Ratings: {{ hikedetails.avg_rating }}</p>
 
-  <div class = "container-1">
-    <div class = "box-3">
+  
       {% if curr_temp %}
-      
-        <h4>Weather near trail</h4>
-          {% if curr_temp > 85 %}
+          <div class = "box-3">
+        
+          <h4>Weather near trail</h4>
+            {% if curr_temp > 85 %}
+              <p>
+                <h6 class = "hot">Current temprature {{ curr_temp }} Fahrenheit </h6>
+                <img src="/static/images/hotweather.png">
+              </p>
+            {% else %}
+              <p>
+                <h6>Current temprature {{ curr_temp }} Fahrenheit </h6>
+              </p>
+            {% endif %}
+
             <p>
-              <h6 class = "hot">Current temprature {{ curr_temp }} Fahrenheit </h6>
-              <img src="/static/images/hotweather.png">
+              <h6>Min temprature {{ min_temp }} Fahrenheit </h6>
             </p>
-          {% else %}
+
             <p>
-              <h6>Current temprature {{ curr_temp }} Fahrenheit </h6>
+              <h6>Max temprature {{ max_temp }} Fahrenheit </h6>
             </p>
-          {% endif %}
-
-          <p>
-            <h6>Min temprature {{ min_temp }} Fahrenheit </h6>
-          </p>
-
-          <p>
-            <h6>Max temprature {{ max_temp }} Fahrenheit </h6>
-          </p>
-
+          </div>
+        
       {% endif %} 
-    </div>
-  </div>
+    
 
   <h4>Favorite this trail</h4>
   <form action="/fav_trail" method="POST">
