@@ -121,8 +121,9 @@ Make an account with PYOWM & get an API key.<br>
 
 Store these keys in a file named 'secrets.sh'<br>
 <p>
-$ source secrets.sh
-With PostgreSQL, create the hikeplanet database
+$ source secrets.sh <br>
+<p>
+With PostgreSQL, create the hikeplanet database <br>
 
 $ createdb hikeplanet <br>
 Create all tables and relations in the database and seed all data:<br>
